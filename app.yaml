@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abctech-deployment
+  labels:
+    app: abctech
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: abctech
+  template:
+    metadata:
+      labels:
+        app: abctech
+    spec:
+      containers:
+        - name: abctech-container
+          image: aanchal1818/abc_tech:3
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: abctech-service
+spec:
+  type: NodePort
+  selector:
+    app: abctech
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 32768
